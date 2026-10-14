@@ -194,7 +194,7 @@ Age measured against today's date hides this problem, because everyone looks lik
 
 ## 7. Data model
 
-![Data model](images/model_view.png)
+![Data model](model_view.png)
 
 ### Structure
 
