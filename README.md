@@ -364,7 +364,7 @@ Includes turnover and departures by year and department, voluntary versus involu
 
 - **Slicers** for age, department, sub-department, education, job level, location, location city, marital status and year, grouped in a **collapsible filter panel** controlled by bookmarks
 - **Navigation buttons** between pages
-- **Field parameter** on the all pages to switch the view
+- **Field parameter** on the retention page to switch the view
 
 ---
 
