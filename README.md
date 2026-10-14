@@ -1,8 +1,8 @@
 # HR Workforce Analytics: Headcount, Retention and Turnover (Power BI)
 
-An interactive Power BI report that gives an HR team one place to see **who works in the company, how many people it keeps, and why people leave**. It is built on two raw HR files for an imaginary company of 4,138 employees (2012â€“2022), reshaped in Power Query into a dimensional data model and analysed with DAX measures.
+It is an interactive Power BI report that gives an HR team one place to see **who works in the company, how many employees they have, and why employees leave**. It is built on two raw HR files for an imaginary company of 4,138 employees (2012-2022).
 
-> **Project type:** This is a guided project. I followed a structured course to build the core report, and I added my own data-quality check (age at hire), my own validation steps, and my own documentation and insights. See [What I added](#2-project-transparency-what-is-guided-and-what-i-added).
+> **Project type:** This is a guided project. I followed a structured course to build the dashboard in Power BI, and I added my own data-quality checks, my own validation steps, and documentation and further analysis. See [What I added](#2-project-transparency-what-is-guided-and-what-i-added).
 
 ---
 
@@ -23,8 +23,7 @@ An interactive Power BI report that gives an HR team one place to see **who work
 13. [How to use this project](#13-how-to-use-this-project)
 14. [Skills demonstrated](#14-skills-demonstrated)
 15. [Future improvements](#15-future-improvements)
-16. [Repository structure](#16-repository-structure)
-17. [About me](#17-about-me)
+16. [About me](#17-about-me)
 
 ---
 
@@ -51,7 +50,7 @@ An interactive Power BI report that gives an HR team one place to see **who work
 
 - **Age-at-hire data-quality check.** I merged birth dates into the employment table, calculated the age of each employee on their hire date, and found 451 employees (10.9%) who were hired before age 18. I flagged them with an `Age check` column rather than deleting them. See [section 6](#6-data-quality-finding-implausible-age-at-hire).
 - **Validation of the dimension tables.** I checked each dimension table's row count and join after building it.
-- **Measure validation.** I tested the Headcount measure on 2012: 419 employees were hired and 10 left, which leaves 409.
+- **Measure validation.** I tested all the measures. For eg. Headcount measure on 2012: 419 employees were hired and 10 left, which leaves 409.
 - **Documentation and insights.** I wrote the data dictionary, the preparation log, the measure explanations, the insights and the limitations in this README, and I checked the figures against the source data.
 
 ---
@@ -84,7 +83,7 @@ An imaginary company has employee records spread across two flat files. HR leade
 
 ## 4. Data source and data dictionary
 
-The dataset describes an imaginary company, so the figures illustrate analytical technique and aren't real HR conclusions. Source: *[add the source / link of the dataset here]*.
+The dataset describes an imaginary company, so the figures illustrate analytical technique and aren't real HR conclusions.
 
 ### File 1: employee table (one row per employee)
 
@@ -151,12 +150,13 @@ The raw files were already fairly clean (no duplicates and almost no nulls), so 
 | 11 | Marital status table | Distinct values with `Marital index` | **2** rows |
 | 12 | Manager table | Merged each manager level back to the employee table to get the manager's first and last name, then combined them into a full name per level | Manager table with ID and full name for four management levels, linked through employee ID |
 | 13 | Employment table | Merged each dimension's index into the employment table, then removed the original descriptive columns | Compact central table (see below) |
+| 14 | Age check table | All the employees hire and birth dates to check the age of people when they were hired | **4138** rows |
 
 I merged the employee data into the employment table first so that every dimension could be created from a single table, which also gave me **one central table with one row per employee** to build the model around.
 
 ### Final central table (`Main_table`)
 
-`Employee ID`, `First name`, `Last name`, `Salary`, `Hire date`, `Term date`, `Active status`, `Employment status`, `Job level index`, `Department index`, `Demographic index`, `Education index`, `Location index`, `Marital index`, `Term index`, plus the added `Age when hired` and `Age check` columns.
+`Employee ID`, `First name`, `Last name`, `Salary`, `Hire date`, `Term date`, `Active status`, `Employment status`, `Job level index`, `Department index`, `Demographic index`, `Education index`, `Location index`, `Marital index`, `Term index`.
 
 ### Notes on specific choices
 
@@ -176,7 +176,7 @@ I merged the employee data into the employment table first so that every dimensi
 
 Because the report covers events from 2012 onward, I checked how old each employee was **on their hire date**, not just how old they are today.
 
-**Method.** I merged `birth_date` into the employment table and added a custom column:
+**Method.** I referenced the employee table, got the birth date and merged main_table and got the hire date into the new age check table and added a custom column:
 
 ```
 Age when hired = Number.RoundDown( Duration.Days( [Hire Date] - [Birth Date] ) / 365.25 )
@@ -212,14 +212,16 @@ The model is a **star-style schema** built around one employee-level table.
 | `Term_table` | Exit type and reason |
 | `Manager_table` | Names of the four management levels, linked through employee ID |
 | `_measure` | Holds all DAX measures |
-| `_Dates (Big)` | Calendar used by the headcount, retention and turnover measures |
+| `Calendar` | Calendar used by the headcount, retention and turnover measures |
 | `Parameter` | Field parameter used on the Retention page |
+| `Age Check` | To check whether the age of employees was valid when they were hired |
+
 
 ### Relationships
 
 - Each dimension table connects to `Main_table` through its index column in a **one-to-many** relationship (one on the dimension side).
 - `Manager_table` connects to `Main_table` on employee ID.
-- `_Dates (Big)` is deliberately **not related** to `Main_table`. The employee table has two relevant dates (hire and exit), and a single relationship can't serve both. Instead, the measures compare each employee's hire and term dates against the first and last date of whichever period is in view.
+- `Calendar` is deliberately **not related** to `Main_table`. The employee table has two relevant dates (hire and exit), and a single relationship can't serve both. Instead, the measures compare each employee's hire and term dates against the first and last date of whichever period is in view.
 
 ### Why a calendar table
 
@@ -230,8 +232,8 @@ The employee table only has dates on days when something happened: a hire, or an
 A `Timeframe` column on the calendar flags dates from the first hire date up to today:
 
 ```DAX
-Timeframe = IF('_Dates (Big)'[Date] >= FIRSTDATE(Main_table[Hire date])
-            && '_Dates (Big)'[Date] <= TODAY(), 1, 0)
+Timeframe = IF('Calendar'[Date] >= FIRSTDATE(Main_table[Hire date])
+            && 'Calendar'[Date] <= TODAY(), 1, 0)
 ```
 
 It is applied as a **report-level filter (Timeframe = 1)** so that every page and slicer uses the same date range and unused calendar dates don't appear. Because it ends at `TODAY()`, years after the data ends contain no exits (see [limitations](#12-limitations-and-assumptions)).
@@ -252,8 +254,8 @@ CALCULATE (
     [Total employees],
     FILTER (
         Main_table,
-        Main_table[Hire date] <= LASTDATE ( '_Dates (Big)'[Date] )
-            && ( Main_table[Term date] > LASTDATE ( '_Dates (Big)'[Date] )
+        Main_table[Hire date] <= LASTDATE ( 'Calendar'[Date] )
+            && ( Main_table[Term date] > LASTDATE ( 'Calendar'[Date] )
                  || Main_table[Term date] = BLANK () )
     )
 )
@@ -263,9 +265,9 @@ CALCULATE (
     [Total employees],
     FILTER (
         Main_table,
-        Main_table[Hire date] < FIRSTDATE ( '_Dates (Big)'[Date] )
+        Main_table[Hire date] < FIRSTDATE ( 'Calendar'[Date] )
             && ( Main_table[Term date] = BLANK ()
-                 || Main_table[Term date] >= FIRSTDATE ( '_Dates (Big)'[Date] ) )
+                 || Main_table[Term date] >= FIRSTDATE ( 'Calendar'[Date] ) )
     )
 )
 
@@ -274,9 +276,9 @@ CALCULATE (
     [Total employees],
     FILTER (
         Main_table,
-        Main_table[Hire date] < FIRSTDATE ( '_Dates (Big)'[Date] )
+        Main_table[Hire date] < FIRSTDATE ( 'Calendar'[Date] )
             && ( Main_table[Term date] = BLANK ()
-                 || Main_table[Term date] >= LASTDATE ( '_Dates (Big)'[Date] ) )
+                 || Main_table[Term date] >= LASTDATE ( 'Calendar'[Date] ) )
     )
 )
 
@@ -285,8 +287,8 @@ CALCULATE (
     [Total employees],
     FILTER (
         Main_table,
-        Main_table[Term date] >= FIRSTDATE ( '_Dates (Big)'[Date] )
-            && Main_table[Term date] <= LASTDATE ( '_Dates (Big)'[Date] )
+        Main_table[Term date] >= FIRSTDATE ( 'Calendar'[Date] )
+            && Main_table[Term date] <= LASTDATE ( 'Calendar'[Date] )
     )
 )
 
@@ -299,10 +301,10 @@ Turnover = [Departing employee] / [Average employees]
 Min Max retention =
 SWITCH (
     TRUE (),
-    SELECTEDVALUE ( '_Dates (Big)'[Year] )
-        = CALCULATE ( MIN ( '_Dates (Big)'[Year] ), ALLSELECTED ( '_Dates (Big)' ) ), [Retention],
-    SELECTEDVALUE ( '_Dates (Big)'[Year] )
-        = CALCULATE ( MAX ( '_Dates (Big)'[Year] ), ALLSELECTED ( '_Dates (Big)' ) ), [Retention],
+    SELECTEDVALUE ( 'Calendar'[Year] )
+        = CALCULATE ( MIN ( 'Calendar'[Year] ), ALLSELECTED ( 'Calendar' ) ), [Retention],
+    SELECTEDVALUE ( 'Calendar'[Year] )
+        = CALCULATE ( MAX ( 'Calendar'[Year] ), ALLSELECTED ( 'Calendar' ) ), [Retention],
     BLANK ()
 )
 ```
@@ -462,28 +464,11 @@ If you refresh the data, Power Query reads the two source CSV files, so keep the
 
 ---
 
-## 16. Repository structure
 
-```
-HR-Analytics/
-â”œâ”€â”€ README.md
-â”œâ”€â”€ HR.pbix
-â”œâ”€â”€ data/
-â”‚   â”œâ”€â”€ people_data.csv
-â”‚   â””â”€â”€ people_employment_history.csv
-â””â”€â”€ images/
-    â”œâ”€â”€ model_view.png
-    â”œâ”€â”€ cover.png
-    â”œâ”€â”€ headcount.png
-    â”œâ”€â”€ retention.png
-    â””â”€â”€ turnover.png
-```
 
----
+## 16. About me
 
-## 17. About me
+**[Yamini Thakur]**: aspiring Business Analyst
 
-**[Your name]**: aspiring Business Analyst / BI Developer
-
-[LinkedIn](https://www.linkedin.com/in/your-profile) Â· [GitHub](https://github.com/your-username)
+[LinkedIn](https://www.linkedin.com/in/your-profile)
 
