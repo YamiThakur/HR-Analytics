@@ -388,7 +388,7 @@ Includes turnover and departures by year and department, voluntary versus involu
 
 | Observation | So what |
 |---|---|
-| Company retention **rose steadily from [2016 value] in 2016 to 97.8% in 2020**. | Retention improved year over year across the period, which suggests the company has become better at keeping people. |
+| Company retention **rose steadily from 95.1% in 2016 to 97.6% in 2020.**. | Retention improved year over year across the period, which suggests the company has become better at keeping people. |
 | **Exits jumped from 89 in 2020 to 168 in 2021**, lowering retention. Of the 168, 145 were voluntary, and the top reasons were more flexible benefits (45) and better salary (42). In 2020, "found a better opportunity" led. | Pay and benefits drove the 2021 spike, not a general loss of engagement. Sales (32), Software (24) and Operations (20) lost the most people. |
 | **R&D** recorded among the lowest retention rates in 2013 and 2016. Its leavers cited more flexible benefits (10), a better opportunity (9) and better salary (7). R&D also has the highest exit rate of any department (20.9% of everyone ever hired there). | Benefits and pay are the first things to review in R&D. The group is small (about 40 exits), so this is a signal to investigate. |
 | **Administration** leavers mainly cited better salary (10) and more flexible benefits (9). Only 5 of 31 leavers were managers. | Attrition there is mostly among individual contributors, not leadership. |
@@ -436,8 +436,6 @@ The company is imaginary, so these are the actions I would suggest in a real set
 3. Use the buttons on the cover page to move between Headcount, Retention and Turnover.
 4. Open the filter panel to narrow the data by department, job level, location, education, age, marital status and year.
 
-If you refresh the data, Power Query reads the two source CSV files, so keep them in the same location or update the file path under **Transform data â†’ Data source settings**.
-
 ---
 
 ## 14. Skills demonstrated
@@ -456,15 +454,9 @@ If you refresh the data, Power Query reads the two source CSV files, so keep the
 ## 15. Future improvements
 
 - Calculate age against a **fixed end-of-data date** and end the `Timeframe` filter at the last date in the data.
-- Add a **year-over-year retention change** measure and a **tenure-at-exit** analysis.
-- Use `DIVIDE` instead of `/` in ratio measures and group measures into display folders.
-- Add a **drill-through page** for a department and tooltip pages for trends.
-- Add **row-level security** (for example by department) as a demonstration.
 - Publish to Power BI Service once a work account is available.
 
 ---
-
-
 
 ## 16. About me
 
