@@ -337,34 +337,34 @@ SWITCH (
 
 A landing page with navigation buttons to the three analysis pages.
 
-![Cover](images/cover.png)
+![Cover](images/Front page of HR Report.png)
 
 ### Page 1: Headcount
 
 **Purpose:** show how many people work in the company and what the workforce looks like.
 Breakdowns include department, job level, work location, education, gender, race, marital status and age group.
 
-![Headcount page](images/headcount.png)
+![Headcount page](Headcount.png)
 
 ### Page 2: Retention
 
 **Purpose:** show how well the company keeps its people over time and by department.
 Includes retention by year, by department and by job level, plus a min and max retention benchmark that uses a field parameter.
 
-![Retention page](images/retention.png)
+![Retention page](Retention.png)
 
 ### Page 3: Turnover
 
 **Purpose:** show how many people leave and why.
 Includes turnover and departures by year and department, voluntary versus involuntary exits, and exit reasons.
 
-![Turnover page](images/turnover.png)
+![Turnover page](Turnover.png)
 
 ### Interactivity
 
 - **Slicers** for age, department, sub-department, education, job level, location, location city, marital status and year, grouped in a **collapsible filter panel** controlled by bookmarks
 - **Navigation buttons** between pages
-- **Field parameter** on the Retention page to switch the view
+- **Field parameter** on the all pages to switch the view
 
 ---
 
@@ -390,7 +390,7 @@ Includes turnover and departures by year and department, voluntary versus involu
 |---|---|
 | Company retention **rose steadily from [2016 value] in 2016 to 97.8% in 2020**. | Retention improved year over year across the period, which suggests the company has become better at keeping people. |
 | **Exits jumped from 89 in 2020 to 168 in 2021**, lowering retention. Of the 168, 145 were voluntary, and the top reasons were more flexible benefits (45) and better salary (42). In 2020, "found a better opportunity" led. | Pay and benefits drove the 2021 spike, not a general loss of engagement. Sales (32), Software (24) and Operations (20) lost the most people. |
-| **R&D** recorded among the lowest retention rates in 2013 and 2016. Its leavers cited more flexible benefits (10), a better opportunity (9) and better salary (7). R&D also has the highest exit rate of any department (20.9% of everyone ever hired there). | Benefits and pay are the first things to review in R&D. The group is small (about 40 exits), so this is a signal to investigate, not a conclusion. |
+| **R&D** recorded among the lowest retention rates in 2013 and 2016. Its leavers cited more flexible benefits (10), a better opportunity (9) and better salary (7). R&D also has the highest exit rate of any department (20.9% of everyone ever hired there). | Benefits and pay are the first things to review in R&D. The group is small (about 40 exits), so this is a signal to investigate. |
 | **Administration** leavers mainly cited better salary (10) and more flexible benefits (9). Only 5 of 31 leavers were managers. | Attrition there is mostly among individual contributors, not leadership. |
 
 ### Turnover
@@ -460,7 +460,7 @@ If you refresh the data, Power Query reads the two source CSV files, so keep the
 - Use `DIVIDE` instead of `/` in ratio measures and group measures into display folders.
 - Add a **drill-through page** for a department and tooltip pages for trends.
 - Add **row-level security** (for example by department) as a demonstration.
-- Publish to Power BI Service once a work or school account is available.
+- Publish to Power BI Service once a work account is available.
 
 ---
 
@@ -470,5 +470,5 @@ If you refresh the data, Power Query reads the two source CSV files, so keep the
 
 **[Yamini Thakur]**: aspiring Business Analyst
 
-[LinkedIn](https://www.linkedin.com/in/your-profile)
+[LinkedIn]((https://www.linkedin.com/in/yaminithakur27/))
 
