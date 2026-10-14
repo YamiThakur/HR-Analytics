@@ -50,7 +50,7 @@ It is an interactive Power BI report that gives an HR team one place to see **wh
 
 - **Age-at-hire data-quality check.** I merged birth dates into the employment table, calculated the age of each employee on their hire date, and found 451 employees (10.9%) who were hired before age 18. I flagged them with an `Age check` column rather than deleting them. See [section 6](#6-data-quality-finding-implausible-age-at-hire).
 - **Validation of the dimension tables.** I checked each dimension table's row count and join after building it.
-- **Measure validation.** I tested all the measures. For eg. Headcount measure on 2012: 419 employees were hired and 10 left, which leaves 409.
+- **Measure validation.** I validated each measure after building it. For example, the Headcount measure for 2012: 419 employees were hired and 10 left, which leaves 409.
 - **Documentation and insights.** I wrote the data dictionary, the preparation log, the measure explanations, the insights and the limitations in this README, and I checked the figures against the source data.
 
 ---
@@ -319,15 +319,15 @@ SWITCH (
 | **Ending headcount** | Employees from the **starting group** who are still with the company at the end of the period. People hired during the period are excluded. |
 | **Departing employee** | Employees whose exit date falls inside the period |
 | **Average employees** | The mean of starting headcount and end-of-period headcount |
-| **Retention** | Ending headcount Ã· starting headcount: the share of the starting group that stayed |
-| **Turnover** | Departing employees Ã· average employees |
+| **Retention** | Ending headcount divided by starting headcount: the share of the starting group that stayed |
+| **Turnover** | Departing employees divided by average employees |
 | **Min Max retention** | Retention shown only for the first and last year in the current selection, used for a benchmark chart on the Retention page |
 
 ### Design notes
 
 - **Why new hires are excluded from retention.** Retention asks how many existing employees the company kept. Someone hired during the year has not yet been there a full period, and including them in the numerator but not the denominator would let retention exceed 100%. That is why `Ending headcount` is built on the starting group.
 - **Boundary day.** `Ending headcount` uses `Term date >= last day` and `Departing employee` uses `Term date <= last day`, so an employee who leaves exactly on the last day of the period is counted in both. It affects very few rows.
-- **Validation.** For 2012, Headcount returned 409: 419 employees were hired and 10 left.
+- **Validation.** Validated each measure after building it. For example, the Headcount measure for 2012: 419 employees were hired and 10 left, which leaves 409.
 
 ---
 
@@ -388,7 +388,7 @@ Includes turnover and departures by year and department, voluntary versus involu
 
 | Observation | So what |
 |---|---|
-| Company retention **rose steadily from 95.1% in 2016 to 97.6% in 2020.**. | Retention improved year over year across the period, which suggests the company has become better at keeping people. |
+| Company retention **rose steadily from 95.1% in 2016 to 97.6% in 2020.** | Retention improved year over year from 2016 to 2020, then dipped in 2021, which suggests the company had become better at keeping people before the 2021 exits.|
 | **Exits jumped from 89 in 2020 to 168 in 2021**, lowering retention. Of the 168, 145 were voluntary, and the top reasons were more flexible benefits (45) and better salary (42). In 2020, "found a better opportunity" led. | Pay and benefits drove the 2021 spike, not a general loss of engagement. Sales (32), Software (24) and Operations (20) lost the most people. |
 | **R&D** recorded among the lowest retention rates in 2013 and 2016. Its leavers cited more flexible benefits (10), a better opportunity (9) and better salary (7). R&D also has the highest exit rate of any department (20.9% of everyone ever hired there). | Benefits and pay are the first things to review in R&D. The group is small (about 40 exits), so this is a signal to investigate. |
 | **Administration** leavers mainly cited better salary (10) and more flexible benefits (9). Only 5 of 31 leavers were managers. | Attrition there is mostly among individual contributors, not leadership. |
@@ -460,7 +460,7 @@ The company is imaginary, so these are the actions I would suggest in a real set
 
 ## 16. About me
 
-**[Yamini Thakur]**: aspiring Business Analyst
+**Yamini Thakur**: aspiring Business Analyst
 
 [LinkedIn](https://www.linkedin.com/in/yaminithakur27/)
 
