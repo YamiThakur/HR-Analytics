@@ -337,7 +337,7 @@ SWITCH (
 
 A landing page with navigation buttons to the three analysis pages.
 
-![Cover](Front page of HR Report.png)
+![Cover](Cover.png)
 
 ### Page 1: Headcount
 
