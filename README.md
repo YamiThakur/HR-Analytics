@@ -23,7 +23,7 @@ It is an interactive Power BI report that gives an HR team one place to see **wh
 13. [How to use this project](#13-how-to-use-this-project)
 14. [Skills demonstrated](#14-skills-demonstrated)
 15. [Future improvements](#15-future-improvements)
-16. [About me](#17-about-me)
+16. [About me](#16-about-me)
 
 ---
 
@@ -83,7 +83,7 @@ An imaginary company has employee records spread across two flat files. HR leade
 
 ## 4. Data source and data dictionary
 
-The dataset describes an imaginary company, so the figures illustrate analytical technique and aren't real HR conclusions.
+The dataset describes an imaginary company, so the figures illustrate analytical technique and aren't real HR conclusions. Source: dataset provided in Udemy (Sweatpants BI: HR Analytics)
 
 ### File 1: employee table (one row per employee)
 
