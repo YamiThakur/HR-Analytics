@@ -337,7 +337,7 @@ SWITCH (
 
 A landing page with navigation buttons to the three analysis pages.
 
-![Cover](images/Front page of HR Report.png)
+![Cover](Front page of HR Report.png)
 
 ### Page 1: Headcount
 
@@ -470,5 +470,5 @@ If you refresh the data, Power Query reads the two source CSV files, so keep the
 
 **[Yamini Thakur]**: aspiring Business Analyst
 
-[LinkedIn]((https://www.linkedin.com/in/yaminithakur27/))
+[LinkedIn](https://www.linkedin.com/in/yaminithakur27/)
 
